@@ -65,6 +65,7 @@
     <Compile Include="Assets\Scripts\Archer.cs" />
     <Compile Include="Assets\Scripts\Arrow.cs" />
     <Compile Include="Assets\Scripts\IInputProvider.cs" />
+    <Compile Include="Assets\Scripts\LayerName.cs" />
     <Compile Include="Assets\Scripts\UnityInputProvider.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>/Users/n01487/Unity/ArcherGame/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>

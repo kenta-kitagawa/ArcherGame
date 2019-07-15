@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Archer : MonoBehaviour
 {
-    enum DIRECTION
+    enum Direction
     {
         Right,
         Left
@@ -14,23 +14,30 @@ public class Archer : MonoBehaviour
 
     private float speed = 3f;
 
-    private float jumpPower = 500;
-
-    private float JUMP_POWER = 2f;
+    private const float JUMP_POWER = 300;
 
 
     [SerializeField]
     private Rigidbody2D rb;
 
-    private DIRECTION direction = DIRECTION.Right;
+    /// <summary>
+    /// キャラクターの向き
+    /// </summary>
+    private Direction direction = Direction.Right;
 
     /// <summary>
     /// 弓所持数
     /// </summary>
     private int arrowPossessionCount = 10;
 
+    /// <summary>
+    /// 矢のプレハブ
+    /// </summary>
     [SerializeField]
     private GameObject arrowPrefab;
+
+    [SerializeField]
+    private bool isJump = false;
 
 
     // Start is called before the first frame update
@@ -52,14 +59,17 @@ public class Archer : MonoBehaviour
         // 移動
         Move();
 
-        
-        if(inputProvider.GetJump())
+        // 着地時にすり抜けないように
+        if (rb.velocity.y < 0)
         {
-            Debug.Log("jump");
+            LayerName.LayerChange(gameObject, (int)LayerName.Layer_Name.Character);
+        }
+
+        // ジャンプ
+        if (inputProvider.GetJump() && !isJump)
+        {
             Jump();
         }
-        
-
 
     }
 
@@ -76,7 +86,9 @@ public class Archer : MonoBehaviour
         {
             rb.AddForce(moveDirection * 10);
         }
-       
+
+
+
     }
 
     /// <summary>
@@ -103,24 +115,41 @@ public class Archer : MonoBehaviour
     /// <param name="moveDirection"></param>
     private void DirectionChange(Vector2 moveDirection)
     {
-        if (direction == DIRECTION.Right && moveDirection.x < 0)
+        if (direction == Direction.Right && moveDirection.x < 0)
         {
             Vector3 scale = transform.localScale;
             scale.x = 1;
-            direction = DIRECTION.Left;
+            direction = Direction.Left;
             transform.localScale = scale;
         }
-        else if (direction == DIRECTION.Left && moveDirection.x > 0)
+        else if (direction == Direction.Left && moveDirection.x > 0)
         {
             Vector3 scale = transform.localScale;
             scale.x = -1;
-            direction = DIRECTION.Right;
+            direction = Direction.Right;
             transform.localScale = scale;
         }
     }
 
+    /// <summary>
+    /// ジャンプ
+    /// </summary>
     private void Jump()
     {
-        rb.AddForce(new Vector2(0, 300f));
+        //上方向に力を加える
+        rb.AddForce(new Vector2(0, JUMP_POWER));
+        isJump = true;
+
+        LayerName.LayerChange(gameObject, (int)LayerName.Layer_Name.CharacterThroughtFloor);
     }
+
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.CompareTag("Floor"))
+        {
+            isJump = false;
+        }
+    }
+
 }

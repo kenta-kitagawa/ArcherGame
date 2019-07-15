@@ -1,10 +1,12 @@
 ﻿<Properties StartupConfiguration="{3D5DE4FB-9872-0289-DCC0-57BE60ADF306}|">
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/LayerName.cs">
     <Files>
       <File FileName="Assets/Scripts/IInputProvider.cs" Line="19" Column="20" />
-      <File FileName="Assets/Scripts/UnityInputProvider.cs" Line="22" Column="46" />
-      <File FileName="Assets/Scripts/Archer.cs" Line="128" Column="62" />
-      <File FileName="Assets/Scripts/Arrow.cs" Line="28" Column="21" />
+      <File FileName="Assets/Scripts/UnityInputProvider.cs" Line="30" Column="10" />
+      <File FileName="Assets/Scripts/Archer.cs" Line="19" Column="47" />
+      <File FileName="Assets/Scripts/Arrow.cs" Line="36" Column="19" />
+      <File FileName="Assets/Scripts/ThroughtFloor.cs" Line="27" Column="2" />
+      <File FileName="Assets/Scripts/LayerName.cs" Line="7" Column="15" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
