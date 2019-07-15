@@ -13,7 +13,7 @@ public class LayerName : MonoBehaviour
         UI = 5,
         Floor = 8,
         Character = 9,
-        CharacterThroughtFloor = 10
+        CharacterThroughtFloor = 10,
     }
 
 

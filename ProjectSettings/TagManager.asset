@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Floor
+  - Arrow
+  - Wall
+  - SafetyArrow
   layers:
   - Default
   - TransparentFX
@@ -17,7 +20,7 @@ TagManager:
   - Floor
   - Character
   - CharacterThroughtFloor
-  - 
+  - Arrow
   - 
   - 
   - 

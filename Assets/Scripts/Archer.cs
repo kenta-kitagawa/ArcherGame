@@ -4,19 +4,33 @@ using UnityEngine;
 
 public class Archer : MonoBehaviour
 {
+    /// <summary>
+    /// 方向
+    /// </summary>
     enum Direction
     {
         Right,
         Left
     }
 
+    /// <summary>
+    /// インプットプロバイダー
+    /// </summary>
     private UnityInputProvider inputProvider;
 
-    private float speed = 3f;
+    /// <summary>
+    /// 移動速度
+    /// </summary>
+    private float speed = 10f;
 
+    /// <summary>
+    /// ジャンプ力
+    /// </summary>
     private const float JUMP_POWER = 300;
 
-
+    /// <summary>
+    /// Rigfidbody
+    /// </summary>
     [SerializeField]
     private Rigidbody2D rb;
 
@@ -36,8 +50,21 @@ public class Archer : MonoBehaviour
     [SerializeField]
     private GameObject arrowPrefab;
 
+    /// <summary>
+    /// ジャンプ中か？
+    /// </summary>
     [SerializeField]
     private bool isJump = false;
+
+    /// <summary>
+    /// velocityの最大値
+    /// </summary>
+    private const int VLIMIT = 5;
+
+
+    private const int rapid = 120;
+
+    private int coolTime = 0;
 
 
     // Start is called before the first frame update
@@ -49,9 +76,11 @@ public class Archer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // クールタイム減少
+        SubCoolTime();
 
-        // 弓矢を射る　残数チェックを入れる
-        if(inputProvider.GetShoot() && IsPossibleShoot())
+        // 弓矢を射る
+        if (inputProvider.GetShoot() && IsPossibleShoot())
         {
             ArrowShoot();
         }
@@ -71,6 +100,12 @@ public class Archer : MonoBehaviour
             Jump();
         }
 
+        // すり抜け床を降りる
+        if (inputProvider.GetDownKey())
+        {
+            LayerName.LayerChange(gameObject, (int)LayerName.Layer_Name.CharacterThroughtFloor);
+        }
+
     }
 
     /// <summary>
@@ -82,20 +117,18 @@ public class Archer : MonoBehaviour
         // 向きを変える
         DirectionChange(moveDirection);
 
-        if(rb.velocity.magnitude<5)
+
+        if (rb.velocity.magnitude < VLIMIT)
         {
-            rb.AddForce(moveDirection * 10);
+            rb.AddForce(moveDirection * speed);
         }
-
-
-
     }
 
     /// <summary>
     /// 弓矢の残数
     /// </summary>
     /// <returns></returns>
-    private bool IsPossibleShoot() => arrowPossessionCount > 0;
+    private bool IsPossibleShoot() => (arrowPossessionCount > 0) && (coolTime <= 0);
 
 
     /// <summary>
@@ -103,10 +136,9 @@ public class Archer : MonoBehaviour
     /// </summary>
     private void ArrowShoot()
     {
-
         GameObject createArrow = Instantiate(arrowPrefab, transform.position, transform.rotation);
         createArrow.GetComponent<Arrow>().Initialized(5, transform.localScale.x < 0);
-
+        coolTime = rapid;
     }
 
     /// <summary>
@@ -143,13 +175,35 @@ public class Archer : MonoBehaviour
         LayerName.LayerChange(gameObject, (int)LayerName.Layer_Name.CharacterThroughtFloor);
     }
 
-
+    /// <summary>
+    /// 当たり判定
+    /// </summary>
+    /// <param name="collision"></param>
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.CompareTag("Floor"))
+        switch(collision.gameObject.tag)
         {
-            isJump = false;
+            case "Floor":
+                isJump = false;
+                break;
+
+            case "Arrow":
+            // 相手が射った矢に当たるとダメージ
+            // 落ちている、壁に刺さった矢に当たると取得
+
+            case "SaftyArrow":
+                //Destroy(collision.gameObject);
+                arrowPossessionCount++;
+                Debug.Log("矢を取得");
+                break;
         }
     }
 
+
+    private void SubCoolTime()
+    {
+        if (coolTime <= 0) return;
+
+        coolTime--;
+    }
 }

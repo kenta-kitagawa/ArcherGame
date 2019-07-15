@@ -21,6 +21,8 @@ public class UnityInputProvider : MonoBehaviour , IInputProvider
 
     public bool GetJump() => Input.GetKeyDown(KeyCode.J);
 
+    public bool GetDownKey() => Input.GetKey(KeyCode.S);
+
     public Vector2 GetMoveDirection()
     {
         Vector2 inputDirectrion = Vector2.zero;
