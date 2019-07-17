@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Archer : MonoBehaviour
 {
@@ -66,11 +67,15 @@ public class Archer : MonoBehaviour
 
     private int coolTime = 0;
 
+    [SerializeField]
+    private Text arrowText;
+
 
     // Start is called before the first frame update
     void Start()
     {
        inputProvider = UnityInputProvider.GetInstance();
+       arrowText.text = arrowPossessionCount.ToString();
     }
 
     // Update is called once per frame

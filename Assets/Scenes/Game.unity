@@ -348,7 +348,7 @@ GameObject:
   - component: {fileID: 547935977}
   - component: {fileID: 547935976}
   m_Layer: 5
-  m_Name: NumText
+  m_Name: ArrowNumText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -640,7 +640,7 @@ GameObject:
   - component: {fileID: 1037006720}
   - component: {fileID: 1037006719}
   m_Layer: 5
-  m_Name: NumText
+  m_Name: ScoreNumText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -881,6 +881,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f27ceae6fa03423593ec2b049ecef9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreNumText: {fileID: 1037006719}
+  arrowNumText: {fileID: 547935976}
 --- !u!4 &1656566429
 Transform:
   m_ObjectHideFlags: 0
@@ -1055,6 +1057,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3074718993726371875, guid: e9f07720067b8479788aecc3f98f368b,
+        type: 3}
+      propertyPath: arrowText
+      value: 
+      objectReference: {fileID: 547935976}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9f07720067b8479788aecc3f98f368b, type: 3}
 --- !u!1001 &4553397130932924614
